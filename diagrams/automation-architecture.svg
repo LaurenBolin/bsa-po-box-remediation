@@ -1,0 +1,223 @@
+<svg width="960" height="810" xmlns="http://www.w3.org/2000/svg" font-family="Arial,sans-serif">
+
+  <!-- Canvas background -->
+  <rect width="960" height="680" fill="#f0f0f0"/>
+
+  <!-- Header bar -->
+  <rect width="960" height="48" fill="#1a1a2e"/>
+  <text x="18" y="22" fill="#FF6D5A" font-size="20" font-weight="900" letter-spacing="-1">n8n</text>
+  <line x1="56" y1="10" x2="56" y2="38" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <text x="64" y="22" fill="rgba(255,255,255,0.75)" font-size="13">BSA PO Box Remediation Workflow</text>
+  <rect x="840" y="14" width="10" height="10" rx="5" fill="#22c55e"/>
+  <text x="856" y="23" fill="rgba(255,255,255,0.6)" font-size="11">Active</text>
+
+  <!-- Canvas area -->
+  <rect x="0" y="48" width="960" height="762" fill="#f8f8f8"/>
+
+  <!-- Dot grid -->
+  <defs>
+    <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="0.9" fill="#ccc"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="48" width="960" height="762" fill="url(#dots)"/>
+
+  <!-- ── NODE HELPER MACRO ──────────────────────────────────────────────── -->
+  <!-- Node dimensions: w=168, h varies (header 34 + body) -->
+
+  <!-- 1: CRON TRIGGER (x=30, y=280) -->
+  <rect x="30" y="266" width="152" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="30" y="266" width="152" height="34" rx="8" fill="#FF6D5A"/>
+  <rect x="30" y="284" width="152" height="16" fill="#FF6D5A"/>
+  <text x="54" y="280" fill="white" font-size="9" font-weight="bold" opacity="0.85">TRIGGER</text>
+  <text x="54" y="293" fill="white" font-size="12" font-weight="bold">Cron</text>
+  <text x="42" y="280" fill="white" font-size="12">⏰</text>
+  <text x="40" y="316" fill="#555" font-size="10">Every Monday 6:00 AM</text>
+  <text x="40" y="330" fill="#888" font-size="9">Frequency: Weekly</text>
+  <!-- output port -->
+  <circle cx="182" cy="306" r="7" fill="#FF6D5A" stroke="white" stroke-width="2"/>
+
+  <!-- Connection 1→2 -->
+  <path d="M 189 306 C 220 306 220 306 250 306" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="246,302 254,306 246,310" fill="#94a3b8"/>
+
+  <!-- 2: READ CSV (x=254, y=266) -->
+  <rect x="254" y="266" width="160" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="254" y="266" width="160" height="34" rx="8" fill="#3b82f6"/>
+  <rect x="254" y="284" width="160" height="16" fill="#3b82f6"/>
+  <text x="278" y="280" fill="white" font-size="9" font-weight="bold" opacity="0.85">GOOGLE DRIVE</text>
+  <text x="278" y="293" fill="white" font-size="12" font-weight="bold">Download File</text>
+  <text x="266" y="280" fill="white" font-size="12">📁</text>
+  <text x="264" y="316" fill="#555" font-size="10">Verafin PO Box CSV export</text>
+  <text x="264" y="330" fill="#888" font-size="9">File ID: {{verafinExportId}}</text>
+  <circle cx="254" cy="306" r="7" fill="#64748b" stroke="white" stroke-width="2"/>
+  <circle cx="414" cy="306" r="7" fill="#3b82f6" stroke="white" stroke-width="2"/>
+
+  <!-- Connection 2→3 -->
+  <path d="M 421 306 C 452 306 452 306 482 306" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="478,302 486,306 478,310" fill="#94a3b8"/>
+
+  <!-- 3: PARSE + FILTER (x=486, y=266) -->
+  <rect x="486" y="266" width="160" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="486" y="266" width="160" height="34" rx="8" fill="#6366f1"/>
+  <rect x="486" y="284" width="160" height="16" fill="#6366f1"/>
+  <text x="510" y="280" fill="white" font-size="9" font-weight="bold" opacity="0.85">CODE</text>
+  <text x="510" y="293" fill="white" font-size="12" font-weight="bold">Parse + Filter</text>
+  <text x="498" y="280" fill="white" font-size="12">🔧</text>
+  <text x="496" y="316" fill="#555" font-size="10">Parse CSV · Filter PO Box</text>
+  <text x="496" y="330" fill="#888" font-size="9">Output: record array</text>
+  <circle cx="486" cy="306" r="7" fill="#64748b" stroke="white" stroke-width="2"/>
+  <circle cx="646" cy="306" r="7" fill="#6366f1" stroke="white" stroke-width="2"/>
+
+  <!-- Connection 3→4 -->
+  <path d="M 653 306 C 684 306 684 306 714 306" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="710,302 718,306 710,310" fill="#94a3b8"/>
+
+  <!-- 4: SPLIT IN BATCHES (x=718, y=266) -->
+  <rect x="718" y="266" width="160" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="718" y="266" width="160" height="34" rx="8" fill="#475569"/>
+  <rect x="718" y="284" width="160" height="16" fill="#475569"/>
+  <text x="742" y="280" fill="white" font-size="9" font-weight="bold" opacity="0.85">CORE</text>
+  <text x="742" y="293" fill="white" font-size="12" font-weight="bold">Split In Batches</text>
+  <text x="730" y="280" fill="white" font-size="12">📦</text>
+  <text x="728" y="316" fill="#555" font-size="10">Batch size: 1</text>
+  <text x="728" y="330" fill="#888" font-size="9">Loop through each record</text>
+  <circle cx="718" cy="306" r="7" fill="#64748b" stroke="white" stroke-width="2"/>
+  <circle cx="878" cy="306" r="7" fill="#475569" stroke="white" stroke-width="2"/>
+
+  <!-- Connection 4 down to Bankway -->
+  <path d="M 798 346 C 798 370 798 370 798 400" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="794,396 798,404 802,396" fill="#94a3b8"/>
+
+  <!-- 5: BANKWAY HTTP (centered x=718, y=404) -->
+  <rect x="718" y="404" width="160" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="718" y="404" width="160" height="34" rx="8" fill="#0891b2"/>
+  <rect x="718" y="422" width="160" height="16" fill="#0891b2"/>
+  <text x="742" y="418" fill="white" font-size="9" font-weight="bold" opacity="0.85">HTTP REQUEST</text>
+  <text x="742" y="431" fill="white" font-size="12" font-weight="bold">Bankway CIF</text>
+  <text x="730" y="418" fill="white" font-size="12">🌐</text>
+  <text x="728" y="454" fill="#555" font-size="10">GET /cif/{accountNumber}</text>
+  <text x="728" y="468" fill="#888" font-size="9">Auth: x-api-key header</text>
+  <circle cx="718" cy="444" r="7" fill="#64748b" stroke="white" stroke-width="2"/>
+  <circle cx="878" cy="444" r="7" fill="#0891b2" stroke="white" stroke-width="2"/>
+
+  <!-- Connection Bankway→IF -->
+  <path d="M 798 484 C 798 500 798 500 798 524" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="794,520 798,528 802,520" fill="#94a3b8"/>
+
+  <!-- 6: IF node (x=718, y=528) -->
+  <rect x="718" y="528" width="160" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="718" y="528" width="160" height="34" rx="8" fill="#d97706"/>
+  <rect x="718" y="546" width="160" height="16" fill="#d97706"/>
+  <text x="742" y="542" fill="white" font-size="9" font-weight="bold" opacity="0.85">IF</text>
+  <text x="742" y="555" fill="white" font-size="12" font-weight="bold">Address found?</text>
+  <text x="730" y="542" fill="white" font-size="12">⚡</text>
+  <text x="728" y="578" fill="#555" font-size="10">physicalAddress is not empty</text>
+  <text x="728" y="592" fill="#888" font-size="9">YES (true) · NO (false)</text>
+  <!-- two output ports -->
+  <circle cx="718" cy="558" r="7" fill="#64748b" stroke="white" stroke-width="2"/>
+  <circle cx="878" cy="545" r="7" fill="#22c55e" stroke="white" stroke-width="2"/>
+  <circle cx="878" cy="571" r="7" fill="#ef4444" stroke="white" stroke-width="2"/>
+
+  <!-- YES path → left/up to auto-resolve -->
+  <path d="M 885 545 C 920 545 920 480 920 444" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="924" y="500" fill="#16a34a" font-size="9" font-weight="bold">YES</text>
+
+  <!-- NO path → left branch down to search -->
+  <path d="M 710 571 C 650 571 650 580 560 580" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+  <polygon points="564,576 556,580 564,584" fill="#ef4444"/>
+  <text x="620" y="568" fill="#991b1b" font-size="9" font-weight="bold">NO</text>
+
+  <!-- 7: SEARCH SYSTEMS (x=394, y=556) -->
+  <rect x="394" y="556" width="160" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="394" y="556" width="160" height="34" rx="8" fill="#0891b2"/>
+  <rect x="394" y="574" width="160" height="16" fill="#0891b2"/>
+  <text x="418" y="570" fill="white" font-size="9" font-weight="bold" opacity="0.85">HTTP × 2</text>
+  <text x="418" y="583" fill="white" font-size="12" font-weight="bold">Search Sources</text>
+  <text x="406" y="570" fill="white" font-size="12">🔍</text>
+  <text x="404" y="606" fill="#555" font-size="10">actDataScout + ARCourts</text>
+  <text x="404" y="620" fill="#888" font-size="9">Search by name + DOB</text>
+  <circle cx="394" cy="596" r="7" fill="#64748b" stroke="white" stroke-width="2"/>
+  <circle cx="554" cy="596" r="7" fill="#0891b2" stroke="white" stroke-width="2"/>
+
+  <!-- Search → Claude -->
+  <path d="M 386 596 C 340 596 340 596 310 596" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="314,592 306,596 314,600" fill="#94a3b8"/>
+
+  <!-- 8: CLAUDE AI (x=130, y=556) -->
+  <rect x="130" y="556" width="172" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="130" y="556" width="172" height="34" rx="8" fill="#7c3aed"/>
+  <rect x="130" y="574" width="172" height="16" fill="#7c3aed"/>
+  <text x="154" y="570" fill="white" font-size="9" font-weight="bold" opacity="0.85">HTTP — ANTHROPIC</text>
+  <text x="154" y="583" fill="white" font-size="12" font-weight="bold">Claude AI — Match Eval</text>
+  <text x="142" y="570" fill="white" font-size="12">🤖</text>
+  <text x="140" y="606" fill="#555" font-size="10">Model: claude-sonnet-4-6</text>
+  <text x="140" y="620" fill="#888" font-size="9">Returns: high / low / none</text>
+  <circle cx="130" cy="596" r="7" fill="#64748b" stroke="white" stroke-width="2"/>
+  <circle cx="302" cy="596" r="7" fill="#7c3aed" stroke="white" stroke-width="2"/>
+
+  <!-- Claude → Switch down -->
+  <path d="M 216 636 C 216 650 216 650 216 670" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="212,666 216,674 220,666" fill="#94a3b8"/>
+
+  <!-- 9: SWITCH (x=74, y=674) — bottom row showing 3 outcomes -->
+  <rect x="74" y="674" width="116" height="68" rx="6" fill="#e6f4ea" stroke="#86efac" stroke-width="1.5"/>
+  <text x="132" y="694" fill="#166534" font-size="10" font-weight="bold" text-anchor="middle">HIGH</text>
+  <text x="132" y="708" fill="#166534" font-size="9" text-anchor="middle">Auto-resolve</text>
+  <text x="132" y="720" fill="#166534" font-size="9" text-anchor="middle">Submit note</text>
+  <text x="132" y="732" fill="#166534" font-size="9" text-anchor="middle">Update CIF</text>
+
+  <rect x="200" y="674" width="116" height="68" rx="6" fill="#fef9c3" stroke="#fde047" stroke-width="1.5"/>
+  <text x="258" y="694" fill="#854d0e" font-size="10" font-weight="bold" text-anchor="middle">LOW</text>
+  <text x="258" y="708" fill="#854d0e" font-size="9" text-anchor="middle">Email analyst</text>
+  <text x="258" y="720" fill="#854d0e" font-size="9" text-anchor="middle">exception queue</text>
+
+  <rect x="326" y="674" width="116" height="68" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="384" y="694" fill="#991b1b" font-size="10" font-weight="bold" text-anchor="middle">NONE</text>
+  <text x="384" y="708" fill="#991b1b" font-size="9" text-anchor="middle">Email BSA Officer</text>
+  <text x="384" y="720" fill="#991b1b" font-size="9" text-anchor="middle">no-result queue</text>
+
+  <!-- Switch label -->
+  <text x="228" y="665" fill="#555" font-size="9" font-weight="bold" text-anchor="middle">Switch: Confidence level</text>
+
+  <!-- 10: GMAIL SUMMARY (x=586, y=410) - right side -->
+  <rect x="566" y="404" width="148" height="80" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="566" y="404" width="148" height="34" rx="8" fill="#db2777"/>
+  <rect x="566" y="422" width="148" height="16" fill="#db2777"/>
+  <text x="588" y="418" fill="white" font-size="9" font-weight="bold" opacity="0.85">GMAIL</text>
+  <text x="588" y="431" fill="white" font-size="12" font-weight="bold">Daily Summary</text>
+  <text x="578" y="418" fill="white" font-size="12">📧</text>
+  <text x="576" y="454" fill="#555" font-size="10">To: BSA Officer</text>
+  <text x="576" y="468" fill="#888" font-size="9">Resolved / Exceptions / No-result</text>
+  <circle cx="566" cy="444" r="7" fill="#64748b" stroke="white" stroke-width="2"/>
+
+  <!-- All branches converge to Gmail (dashed) -->
+  <path d="M 132 742 C 132 760 640 760 640 484" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+  <path d="M 878 484 C 920 484 940 430 714 444" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#ah3)"/>
+  <defs>
+    <marker id="ah3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <!-- Legend -->
+  <rect x="8" y="60" width="620" height="22" rx="4" fill="rgba(255,255,255,0.8)" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="14" y="65" width="10" height="10" rx="2" fill="#FF6D5A"/>
+  <text x="28" y="74" fill="#444" font-size="9">Trigger</text>
+  <rect x="72" y="65" width="10" height="10" rx="2" fill="#3b82f6"/>
+  <text x="86" y="74" fill="#444" font-size="9">Data</text>
+  <rect x="120" y="65" width="10" height="10" rx="2" fill="#0891b2"/>
+  <text x="134" y="74" fill="#444" font-size="9">HTTP / API</text>
+  <rect x="190" y="65" width="10" height="10" rx="2" fill="#d97706"/>
+  <text x="204" y="74" fill="#444" font-size="9">Condition</text>
+  <rect x="258" y="65" width="10" height="10" rx="2" fill="#7c3aed"/>
+  <text x="272" y="74" fill="#444" font-size="9">Claude AI</text>
+  <rect x="326" y="65" width="10" height="10" rx="2" fill="#16a34a"/>
+  <text x="340" y="74" fill="#444" font-size="9">Auto-resolve</text>
+  <rect x="412" y="65" width="10" height="10" rx="2" fill="#db2777"/>
+  <text x="426" y="74" fill="#444" font-size="9">Reporting</text>
+  <rect x="474" y="65" width="10" height="10" rx="2" fill="#475569"/>
+  <text x="488" y="74" fill="#444" font-size="9">Loop</text>
+  <rect x="524" y="65" width="10" height="10" rx="2" fill="#6366f1"/>
+  <text x="538" y="74" fill="#444" font-size="9">Code</text>
+</svg>
